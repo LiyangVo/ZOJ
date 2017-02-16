@@ -1,12 +1,22 @@
+/***********************
+A + B Problem (1001) from ZOJ
+By yangli.network@gmail.com @20170215
+************************/
+
 #include <iostream>
 using namespace std;
 
 ////////////////////////////////////////////////
-// calculate plus function: 1001
+/* 
+input two numbers a, b
+output a + b
+*/
 
-void CalculatePlus2() {
+int main() {
 	int a, b;
 	while (cin >> a >> b){
 		cout << a + b << endl;
 	}
+
+	return 0;
 }

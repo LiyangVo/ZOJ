@@ -1,8 +1,19 @@
+/***********************
+Fire Net Problem (1002) from ZOJ
+By yangli.network@gmail.com @20170215
+************************/
+
 #include <iostream>
 using namespace std;
 
 ////////////////////////////////////////////////
-// Fire Net Problem: 1002
+/* 
+fisrt solution: 
+1. list all result
+2. pick legal results
+This function will get the right result, but with more calculating needing.
+Call startFireNet to start!
+*/ 
 
 bool isFireNetLegal(const int * map, int index, int maxSize) {
 	if (index < 0 || index >= maxSize * maxSize || map[index] != 0) {
@@ -42,6 +53,7 @@ int FireNet(int range, const int * defaultMap) {
 	int mapSize = range * range;
 	int * map = new int[mapSize];
 
+	// using Binary to list all result
 	int totalCount = 1;
 	for (int i = 0; i < mapSize; i++) {
 		if (defaultMap[i] == 0) {
@@ -106,8 +118,12 @@ void startFireNet()
 }
 
 ////////////////////////////////////////////////
-// Fire Net Problem: 1002 
-// best way
+/* 
+sencond solution:
+using backtraching methods
+This function will calculating faster.
+Call startFireNet2 to start!
+*/
 
 bool isFireNetLegal2(char ** map, int x, int y, int range){
 	// search row
@@ -183,4 +199,14 @@ void startFireNet2() {
 
 		cout << maxCount << endl;
 	}
+}
+
+/////////////////////////////////////////////////////////////
+// main
+
+int main() {
+	//startFireNet();
+	//startFireNet2();
+
+	return 0;
 }
