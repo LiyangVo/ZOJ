@@ -8,9 +8,10 @@ By yangli.network@gmail.com @20170215
 
 using namespace std;
 
-
 ///////////////////////////////////////
 /* 
+solution 1:
+can not pass the test: I do not known why
 1. devide both number to primes
 2. list all valiable result by premuting and combining primes
 3. compare result
@@ -162,13 +163,27 @@ void start() {
 		exhaustive(&primeList1, &subLists1, 1, -1);
 		resetSubLists(&subLists1, a);
 
+
 		dividePrime(b, &primeList2);
 		exhaustive(&primeList2, &subLists2, 1, -1);
 		resetSubLists(&subLists2, b);
 
+		if (a <= 100) {
+			vector<int> vec;
+			vec.push_back(a);
+			subLists1.push_back(vec);
+		}
+		if (b <= 100) {
+			vector<int> vec;
+			vec.push_back(b);
+			subLists2.push_back(vec);
+		}
+
+		// not challage
 		if (subLists2.size() == 0) {
 			cout << a << endl;
 		}
+		// challage
 		else if(subLists1.size() == 0) {
 			cout << b << endl;
 		}
@@ -194,10 +209,136 @@ void start() {
 }
 
 /////////////////////////////////////////////////////////////
+/*
+solution 2: a better way of solution 1
+*/
+
+const int MAX_NUMBER = 100;
+int _usedBallons[MAX_NUMBER + 1];
+
+int tryFactor(int number, int factor) {
+	if (factor > MAX_NUMBER || factor > number) {
+		return 0;
+	}
+	else if (_usedBallons[factor] || number % factor != 0) {
+		return tryFactor(number, factor + 1);
+	}
+	else {
+		return factor;
+	}
+}
+
+bool isFactorable(int number, int factor) {
+	if (number == 1) {
+		return true;
+	}
+	else {
+		factor = tryFactor(number, factor);
+		if (factor == 0) {
+			return false;
+		}
+		else {
+			return isFactorable(number / factor, factor + 1);
+		}
+	}
+}
+
+bool isResultRight(int numA, int numB, int factor) {
+	if (factor > MAX_NUMBER) {
+		return false;
+	}
+	else if (numA == 1) {
+		return isFactorable(numB, 1);
+	}
+
+	factor = tryFactor(numA, factor);
+	if (factor == 0) {
+		return false;
+	}
+
+	_usedBallons[factor] = true;
+	if (isResultRight(numA / factor, numB, factor + 1)) {
+		return true;
+	}
+	
+	_usedBallons[factor] = false;
+	return isResultRight(numA, numB, factor + 1);
+}
+
+void startSolution() {
+	int maxNum, minNum;
+	while (cin >> maxNum >> minNum) {
+		if (maxNum < minNum) {
+			swap(maxNum, minNum);
+		}
+
+		// reset ballon
+		for (int i = 0; i < MAX_NUMBER + 1; i++) {
+			_usedBallons[i] = false;
+		}
+
+		// not have the change to challange
+		if (!isFactorable(minNum, 1)) {
+			cout << maxNum << endl;
+		}
+		else {
+			cout << (isResultRight(maxNum, minNum, 1) ? maxNum : minNum) << endl;
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////
+/* 
+solution 3: 
+1. try to devide given numbers by number from 100 to 2
+this solution can pass the test, but I do not think it is right.
+Ex: The anwer is 86 * 43 * 48, but the solution test 96 * 43 * 43 which can not pass the test.
+*/
+
+int check_low(int m, int w)
+{
+	for (int i = w; i >= 2; --i)
+	{
+		if (m%i == 0)
+		{
+			if ((m /= i) == 1)
+			{
+				return 1;
+			}
+		}
+	}
+	return m == 1;
+}
+
+int check_high(int n, int m, int w)
+{
+	if (1 == n && 1 == m){ return 1; }
+	if (0 == w){ return 0; }
+	return ((0 == n%w) && check_high(n / w, m, w - 1))
+		|| ((0 == m%w) && check_high(n, m / w, w - 1)) || (check_high(n, m, w - 1));
+}
+
+int solve(int n, int m)
+{
+	return (check_low(m, 100) && !check_high(n, m, 100)) ? m : n;
+}
+
+void startSolution2() {
+	int n, m;
+	while (cin >> n >> m)
+	{
+		if (n < m){
+			n ^= m; m ^= n; n ^= m;
+		}
+		cout << solve(n, m) << endl;
+	}
+}
+
+/////////////////////////////////////////////////////////////
 // main
 
 int main() {
-	start();
+	startSolution();
 
 	return 0;
 }
