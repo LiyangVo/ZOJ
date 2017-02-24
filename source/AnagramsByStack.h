@@ -42,7 +42,7 @@ public:
 
 private:
 	char stack[MAX_STACK];
-	int stackIndex = 0;
+	int stackIndex;
 };
 
 // start
@@ -50,9 +50,12 @@ Stack stack;
 char sourceWord[MAX_STACK];
 char targetWord[MAX_STACK];
 char operation[MAX_STACK * 2];
-int operationIndex;
 
-void anagram(int sourceIndex, int targetIndex) {
+void anagram(int sourceIndex, int targetIndex, int operationIndex, int index = 0) {
+	if (sourceIndex > MAX_STACK || targetIndex > MAX_STACK || operationIndex > MAX_STACK * 2) {
+		return;
+	}
+	
 	if (targetWord[targetIndex] == 0) {
 		for (int i = 0; i < operationIndex; i++) {
 			cout << operation[i] << ' ';
@@ -61,35 +64,39 @@ void anagram(int sourceIndex, int targetIndex) {
 		return;
 	}
 
-	if (sourceWord[sourceIndex] != 0) {
-		stack.push(sourceWord[sourceIndex]);
-		operation[operationIndex++] = 'i';
-		anagram(++sourceIndex, targetIndex);
+	if (index == 0) {
+		if (sourceWord[sourceIndex] != 0) {
+			stack.push(sourceWord[sourceIndex]);
+			operation[operationIndex] = 'i';
 
-		sourceIndex--;
-		operationIndex--;
-		stack.pop();
+			anagram(sourceIndex + 1, targetIndex, operationIndex + 1);
+
+			stack.pop();
+		}
+		anagram(sourceIndex, targetIndex, operationIndex, index + 1);
 	}
+	else if (index == 1) {
+		if (targetWord[targetIndex] == stack.getTop()) {
+			stack.pop();
+			operation[operationIndex] = 'o';
 
-	if (targetWord[targetIndex] == stack.getTop()) {
-		stack.pop();
-		operation[operationIndex++] = 'o';
+			anagram(sourceIndex, targetIndex + 1, operationIndex + 1);
 
-		anagram(sourceIndex, ++targetIndex);
+			stack.push(targetWord[targetIndex]);
+		}
+
+		anagram(sourceIndex, targetIndex, operationIndex, index + 1);
 	}
 }
 
 int main() {
-	while (true) {
-		memset(sourceWord, 0, MAX_STACK);
-		memset(targetWord, 0, MAX_STACK);
+	while (cin >> sourceWord >> targetWord) {
 		stack.clear();
-		operationIndex = 0;
-
-		cin >> sourceWord >> targetWord;
 
 		cout << '[' << endl;
-		anagram(0, 0);
-		cout << '[' << endl;
+		anagram(0, 0, 0);
+		cout << ']' << endl;
 	}
+
+	return 0;
 }
