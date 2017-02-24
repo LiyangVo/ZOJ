@@ -22,6 +22,7 @@
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\AnagramsByStack.h" />
     <ClInclude Include="source\CrashBallon.h" />
     <ClInclude Include="source\FireNet.h" />
     <ClInclude Include="source\Plus.h" />
