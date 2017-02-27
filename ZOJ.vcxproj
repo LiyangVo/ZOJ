@@ -25,6 +25,7 @@
     <ClInclude Include="source\AnagramsByStack.h" />
     <ClInclude Include="source\CrashBallon.h" />
     <ClInclude Include="source\FireNet.h" />
+    <ClInclude Include="source\Jugs.h" />
     <ClInclude Include="source\Plus.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
