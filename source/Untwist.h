@@ -48,7 +48,8 @@ int main() {
 		// untwist
 		for (int i = 0; i < len; i++) {
 			int plainIndex = (key * i) % len;
-			plaincode[plainIndex] = charToNumbaer(cipertext[i] + i) % MAX_CODE;
+
+			plaincode[plainIndex] = (charToNumbaer(cipertext[i]) + i) % MAX_CODE;
 		}
 
 		// cout
