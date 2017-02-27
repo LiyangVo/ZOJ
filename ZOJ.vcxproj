@@ -27,6 +27,7 @@
     <ClInclude Include="source\FireNet.h" />
     <ClInclude Include="source\Jugs.h" />
     <ClInclude Include="source\Plus.h" />
+    <ClInclude Include="source\Untwist.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5BD53FF6-479B-4D82-9B04-B987FAE43C10}</ProjectGuid>
