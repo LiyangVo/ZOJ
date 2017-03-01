@@ -12,5 +12,6 @@ By yangli.network@gmail.com
 //#include "AnagramsByStack.h"
 //#include "Jugs.h"
 //#include "Untwist.h"
+//#include "GnomeTetravex.h"
 
-#include "GnomeTetravex.h"
+#include "Enigma.h"

@@ -24,6 +24,7 @@
   <ItemGroup>
     <ClInclude Include="source\AnagramsByStack.h" />
     <ClInclude Include="source\CrashBallon.h" />
+    <ClInclude Include="source\Enigma.h" />
     <ClInclude Include="source\FireNet.h" />
     <ClInclude Include="source\GnomeTetravex.h" />
     <ClInclude Include="source\Jugs.h" />
