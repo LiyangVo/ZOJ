@@ -44,5 +44,8 @@
     <ClInclude Include="source\GnomeTetravex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Enigma.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
