@@ -7,82 +7,48 @@ By yangli.network@gmail.com @20170228
 
 using namespace std;
 
-const int MAX_N = 5;
-const int SQUARE_NUMBER_COUNT = 4;
-const int MAX_SQUARE_COUNT = MAX_N * MAX_N;
-const int MAX_NUMBER_COUNT = MAX_SQUARE_COUNT * SQUARE_NUMBER_COUNT;
+struct Square {
+	int top;
+	int right;
+	int down;
+	int left;
 
-int n;
+	int count;
+
+	void set(int t, int r, int d, int l, int c) {
+		top = t;
+		right = r;
+		down = d;
+		left = l;
+		count = c;
+	}
+	bool compare(int t, int r, int d, int l) {
+		return top == t && right == r && down == d && left == l;
+	}
+};
+
+int line;
 int squareCount;
-int numberCount;
-int squareOrders[MAX_SQUARE_COUNT];
-int squareNumbers[MAX_NUMBER_COUNT];
+int fillSquareCount;
+Square squares[25];
+int fillSquares[25];
 
-void swapSquare(int index1, int index2) {
-	int order = squareOrders[index1];
-
-	squareOrders[index1] = squareOrders[index2];
-	squareOrders[index2] = order;
-}
-
-int getOrderIndex(int order) {
-	for (int i = 0; i < squareCount; i++) {
-		if (squareOrders[i] == order) {
-			return i;
-		}
-	}
-
-	return -1;
-}
-
-bool isCompleted() {
-	for (int i = 0; i < squareCount; i++) {
-		int orderIndex = getOrderIndex(i);
-
-		int row = i / n;
-		int col = i % n;
-		int rightOrder = (col < n - 1) ? (row * n + col + 1) : -1;
-		int downOrder = (row < n - 1) ? ((row + 1) * n + col) : -1;
-
-		if (rightOrder > 0) {
-			int rightIndex = getOrderIndex(rightOrder);
-			if (squareNumbers[orderIndex * MAX_SQUARE_COUNT + 1] != squareNumbers[rightIndex * MAX_SQUARE_COUNT + 3]) {
-				return false;
-			}
-		}
-
-		if (downOrder > 0) {
-			int downIndex = getOrderIndex(downOrder);
-			if (squareNumbers[orderIndex * MAX_SQUARE_COUNT + 2] != squareNumbers[downIndex * MAX_SQUARE_COUNT]) {
-				return false;
-			}
-		}
-	}
-
-	return true;
-}
-
-bool search(int orderIndex) {
-	if (isCompleted()) {
+bool search(int index) {
+	if (index >= fillSquareCount) {
 		return true;
 	}
 
-	if (orderIndex >= squareCount) {
-		return false;
-	}
+	for (int i = 0; i < squareCount; i++) {
+		if (squares[i].count > 0 && (index < line || squares[ fillSquares[index - line] ].down == squares[i].top) && (index % line == 0 || squares[ fillSquares[index - 1] ].right == squares[i].left) ) {
+			squares[i].count--;
+			fillSquares[index] = i;
 
-	for (int i = orderIndex + 1; i < squareCount; i++) {
-		swapSquare(orderIndex, i);
+			if (search(index + 1)) {
+				return true;
+			}
 
-		if (search(orderIndex + 1)) {
-			return true;
+			squares[i].count++;
 		}
-
-		swapSquare(orderIndex, i);
-	}
-
-	if (search(orderIndex + 1)) {
-		return true;
 	}
 
 	return false;
@@ -90,21 +56,31 @@ bool search(int orderIndex) {
 
 int main() {
 	int gameIndex = 0;
+	int t, r, d, l;
 
-	while (cin >> n && n) {
-		squareCount = n * n;
-		numberCount = squareCount * SQUARE_NUMBER_COUNT;
+	while (cin >> line && line) {
+		fillSquareCount = line * line;
+		squareCount = 0;
 
-		for (int i = 0; i < numberCount; i++) {
-			cin >> squareNumbers[i];
-		}
+		// input
+		for (int i = 0; i < fillSquareCount; i++) {
+			cin >> t >> r >> d >> l;
 
-		for (int i = 0; i < squareCount; i++) {
-			squareOrders[i] = i;
+			int j = 0;
+			for (; j < squareCount; j++) {
+				if (squares[j].compare(t, r, d, l)) {
+					squares[j].count++;
+					break;
+				}
+			}
+
+			if (j >= squareCount) {
+				squares[squareCount++].set(t, r, d, l, 1);
+			}
 		}
 
 		// cout
-		gameIndex++;
+		++gameIndex;
 		if (gameIndex > 1) {
 			cout << endl;
 		}
