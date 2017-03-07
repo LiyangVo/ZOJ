@@ -19,18 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="source\AnagramsByStack.h" />
-    <ClInclude Include="source\CrashBallon.h" />
-    <ClInclude Include="source\Enigma.h" />
-    <ClInclude Include="source\FireNet.h" />
-    <ClInclude Include="source\GnomeTetravex.h" />
-    <ClInclude Include="source\Jugs.h" />
-    <ClInclude Include="source\Plus.h" />
-    <ClInclude Include="source\SummationOfSeries.h" />
-    <ClInclude Include="source\Untwist.h" />
+    <ClCompile Include="..\source\AnagramsByStack\AnagramsByStack.cpp" />
+    <ClCompile Include="..\source\Area\Area.cpp" />
+    <ClCompile Include="..\source\CrashBallon\CrashBallon.cpp" />
+    <ClCompile Include="..\source\Enigma\Enigma.cpp" />
+    <ClCompile Include="..\source\FireNet\FireNet.cpp" />
+    <ClCompile Include="..\source\GnomeTextravex\GnomeTetravex.cpp" />
+    <ClCompile Include="..\source\Jugs\Jugs.cpp" />
+    <ClCompile Include="..\source\Plus\Plus.cpp" />
+    <ClCompile Include="..\source\SummationOfSeries\SummationOfSeries.cpp" />
+    <ClCompile Include="..\source\UnTiwist\Untwist.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5BD53FF6-479B-4D82-9B04-B987FAE43C10}</ProjectGuid>
