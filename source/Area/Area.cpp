@@ -2,24 +2,26 @@
 #include <stdio.h>
 using namespace std;
 
-float max(float x, float y) {
+// DO NOT USE FLOAT !!!!
+
+double max(double x, double y) {
   return x > y ? x : y;
 }
 
-float min(float x, float y) {
+double min(double x, double y) {
   return x > y ? y : x;
 }
 
-float abs(float x) {
+double abs(double x) {
   return x >= 0 ? x : -x;
 }
 
 struct Point {
-  float x;
-  float y;
+  double x;
+  double y;
 };
 
-float cross(Point &b, Point &a1, Point &a2) {
+double cross(Point &b, Point &a1, Point &a2) {
   return (b.x - a1.x) * (a2.y - a1.y) - (b.y - a1.y) * (a2.x - a1.x);
 }
 
@@ -35,9 +37,9 @@ bool isIntersect(Point &a1, Point &a2, Point &b1, Point &b2) {
 }
   
 int main() {
-  int count;
-  Point list[1000];
+  int count = 0;
   int index = 0;
+  Point list[1000];
   
   while(cin >> count && count) {
     // input
@@ -50,7 +52,6 @@ int main() {
 		for (int j = 0; j < i - 1 && isPolygon; j++) {
 		  if ((i + 1 - j) != count && isIntersect(list[(i + 1) % count], list[i], list[j + 1], list[j])) {
 		      isPolygon = false;
-		      break;
 		  }
 		}
     }
@@ -62,7 +63,7 @@ int main() {
 
     cout << "Figure " << index << ": ";
     if (isPolygon) {
-      float area = 0;
+      double area = 0;
       for (int i = 0; i < count; i++) {
 		int j = (i + 1) % count;
 		area += list[i].x * list[j].y - list[i].y * list[j].x;
